@@ -2,7 +2,7 @@ from django.db import models
 from .location import Location
 
 class ProductPalette(Location):
-    type = "PRODUCT_PALETTE"  # Direct assignment of type
+    type = "PRODUCT_PALETTE"
 
     product = models.ForeignKey('core.Product', on_delete=models.SET_NULL, null=True, blank=True, related_name='product_palettes')
     quantity = models.PositiveIntegerField(default=0)
