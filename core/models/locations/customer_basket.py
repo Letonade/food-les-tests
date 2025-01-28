@@ -1,12 +1,15 @@
 from django.db import models
 from .location import Location
 from core.models.product import Product
+from .. import Warehouse
+from ..customer import Customer
+
 
 class CustomerBasket(Location):
     type = "CUSTOMER_BASKET"
 
     warehouse = models.ForeignKey(
-        'core.Warehouse',
+        Warehouse,
         on_delete=models.CASCADE,
         related_name='customer_baskets'
     )
@@ -15,8 +18,15 @@ class CustomerBasket(Location):
         through='CustomerBasketProduct',
         related_name='customer_baskets'
     )
+    customer = models.ForeignKey(
+        Customer,
+        on_delete=models.CASCADE,
+        related_name='baskets',
+        null=True,
+        blank=True)
 
-    def __str__(self):
+
+def __str__(self):
         return f"Customer Basket: {self.name} ({self.warehouse.name})"
 
 
