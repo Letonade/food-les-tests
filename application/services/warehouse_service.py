@@ -1,4 +1,5 @@
 from core.models import Website, CustomerBasket, ProductPalette
+from core.models.locations.customer_basket import CustomerBasketProduct
 from core.models.locations.location import Location
 from core.models.product import Product
 from core.models.stock_movement_log import StockMovementLog
@@ -146,3 +147,19 @@ class WarehouseService:
             for loc_product in loc.products.values():
                 stock_levels[loc.name+"_"+loc_product.name] = loc.quantity
         return stock_levels
+
+    @staticmethod
+    @transaction.atomic
+    def clear_customer_baskets(customer):
+        for basket in CustomerBasket.objects.filter(customer=customer):
+            for product_location in CustomerBasketProduct.objects.filter(basket_id=basket.id):
+                StockMovementLog.objects.create(
+                    product=product_location.product,
+                    from_location=basket.name,
+                    to_location="PAYMENT",
+                    quantity=product_location.quantity,
+                    movement_type="PAYMENT"
+                )
+
+        CustomerBasketProduct.objects.filter(basket__customer=customer).delete()
+        CustomerBasket.objects.filter(customer=customer).delete()

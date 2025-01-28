@@ -31,7 +31,7 @@ def create_initial_data():
     website2 = Website.objects.create(name="Website2", warehouse=warehouse2)
     WebsiteProduct.objects.create(website=website2, product=coca_cola, quantity=100)
 
-    customer1 = Customer.objects.create(name="Amelie", address="10 Louis", age=30)
+    customer1 = Customer.objects.create(name="Amelie", address="10 Louis", age=30, balance=500)
     customer2 = Customer.objects.create(name="Bunny", address="20 Lenoir", age=40)
 
     customer_basket1 = CustomerBasket.objects.create(name="AmelieBasket1", warehouse=warehouse1, customer=customer1)
