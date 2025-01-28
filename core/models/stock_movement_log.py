@@ -10,12 +10,8 @@ class StockMovementLog(models.Model):
     ]
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='movements')
-    from_location = models.ForeignKey(
-        ProductPalette, related_name='outgoing_movements', on_delete=models.SET_NULL, null=True, blank=True
-    )
-    to_location = models.ForeignKey(
-        ProductPalette, related_name='incoming_movements', on_delete=models.SET_NULL, null=True, blank=True
-    )
+    from_location = models.CharField(max_length=100, null=True, blank=True)
+    to_location = models.CharField(max_length=100, null=True, blank=True)
     from_location_type = models.CharField(max_length=100, null=True, blank=True)
     to_location_type = models.CharField(max_length=100, null=True, blank=True)
     quantity = models.PositiveIntegerField()
@@ -23,4 +19,4 @@ class StockMovementLog(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.timestamp} | {self.product.name} | {self.movement_type} | {self.quantity}"
+        return f"From: {self.from_location} -> To: {self.to_location} | {self.timestamp} | {self.product.name} | {self.movement_type} | {self.quantity}"

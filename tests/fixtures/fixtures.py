@@ -1,6 +1,10 @@
 from typing import Optional
 
 import pytest
+
+from core.models import CustomerBasket
+from core.models.locations.customer_basket import CustomerBasketProduct
+from core.models.locations.website import WebsiteProduct, Website
 from core.models.product import Product
 from core.models.locations.product_palette import ProductPalette
 from core.models.locations.location import Location
@@ -45,6 +49,33 @@ def create_palette(create_warehouse, create_product):
         return palette
     return _create_palette
 
+@pytest.fixture
+def create_customer_basket(create_warehouse, create_product):
+    def _create_customer_basket(name: Optional[str] = None,
+                        warehouse: Optional[Warehouse] = None) -> CustomerBasket:
+        name = name or "CB001"
+        warehouse = warehouse or create_warehouse()
+        # products = CustomerBasketProduct.objects.create()
+        customer_basket = CustomerBasket.objects.create(
+            name=name,
+            warehouse=warehouse,
+        )
+        return customer_basket
+    return _create_customer_basket
+
+@pytest.fixture
+def create_website(create_warehouse, create_product):
+    def _create_website(name: Optional[str] = None,
+                                warehouse: Optional[Warehouse] = None) -> Website:
+        name = name or "W001"
+        warehouse = warehouse or create_warehouse()
+        #products = WebsiteProduct.objects.create()
+        website = Website.objects.create(
+            name=name,
+            warehouse=warehouse,
+        )
+        return website
+    return _create_website
 
 @pytest.fixture
 def populate_movements(create_palette):
