@@ -42,12 +42,6 @@ class TestProcessPaymentAPIView:
             {"unique_code": self.customer.unique_code},
             format="json"
         )
-        print(f"--------------")
-        print(f"--------------")
-        print(f"{response=}")
-        print(f"{response.data=}")
-        print(f"--------------")
-        print(f"--------------")
 
         assert response.status_code == status.HTTP_200_OK
         assert "Payment of 15 for Alice was successful. All baskets have been cleared." in response.data["success"]

@@ -29,10 +29,8 @@ class MoveProductAPIView(APIView):
 
             from_location = self._get_location_instance(from_location_name, from_location_type)
             to_location = self._get_location_instance(to_location_name, to_location_type)
-            print("post to_location")
 
             WarehouseService.move_product(product, from_location, to_location, int(quantity))
-            print("post WarehouseService.move_product")
 
             return Response({"success": "Product moved successfully."}, status=status.HTTP_200_OK)
 

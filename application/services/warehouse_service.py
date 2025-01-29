@@ -47,7 +47,6 @@ class WarehouseService:
                 from_location.product = None
             from_location.save()
         elif hasattr(from_location, 'products'):
-            print("elif hasattr(to_location, 'products'):")
             WarehouseService._validate_multi_product_source(product, from_location, quantity)
         else:
             raise ValueError("Unsupported source location type.")
